@@ -1,0 +1,21 @@
+<body>
+    <h1>Demo 2 JSON Background Data</h1>
+    <button id="reload">MORE</button>
+    <div id="people"></div>
+    <div id="places"></div>
+</body>
+<script>
+async function logJSONData() {
+  const response = await fetch("people.json");
+  const jsonData = await response.json();
+  places.innerHTML ="";
+    jsonData.forEach(item=>{
+        places.innerHTML += `${item.id} ${item.name} <br>`
+    });
+//   console.log(jsonData);
+}
+logJSONData();
+
+reload.addEventListener("click", logJSONData)
+
+</script>

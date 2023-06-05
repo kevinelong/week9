@@ -1,0 +1,12 @@
+[
+    {
+        "id":1111,
+        "name": "Portland",
+        "short":"PDX"
+    },
+    {
+        "id":2222,
+        "name": "New York",
+        "short" : "NYC"
+    }
+]
