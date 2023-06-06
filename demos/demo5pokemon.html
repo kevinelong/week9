@@ -1,11 +1,12 @@
 <body>
     <input id="pokemon_id" value="1">
     <button id="go">Go!</button>
+    <img src="#" id="output">
 </body>
 <script>
     go.addEventListener("click", async ()=>{
-        let p = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon_id.value}/`);
-        console.log(p)
-        document.body.innerHTML += `<img src="${p.sprites.frontDefault}">`
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon_id.value}/`);
+        const data = await response.json();
+        output.src = data.sprites.front_default;
     })// click
 </script>
