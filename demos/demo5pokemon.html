@@ -1,12 +1,25 @@
 <body>
-    <input id="pokemon_id" value="1">
-    <button id="go">Go!</button>
-    <img src="#" id="output">
+    <select id="list">
+        <option>Select a Pokemon</option>
+    </select>
+    <img src="" id="image">
 </body>
 <script>
-    go.addEventListener("click", async ()=>{
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon_id.value}/`);
+    async function populateList(){
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=2000`);
         const data = await response.json();
-        output.src = data.sprites.front_default;
+        data.results.forEach(p => {
+            const option = document.createElement("option")
+            option.innerHTML = p.name
+            option.value = p.url; //PUT URL INTO THE VALUE
+            list.appendChild(option);
+        })
+    }
+    populateList(); //Call immediately
+
+    list.addEventListener("change", async ()=>{
+        let response = await fetch(list.selectedOptions[0].value); //USE URL FROM VALUE
+        const data = await response.json(); //convert from json string to javascript data types  
+        image.src = data.sprites.front_default; //use proprty of property of json object received
     })// click
 </script>
