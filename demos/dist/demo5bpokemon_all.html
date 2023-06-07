@@ -1,0 +1,18 @@
+<body></body>
+<script>
+    async function getAll(){
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=2000`);
+        const data = await response.json();
+        data.results.forEach(p => getImage(p.url));
+    }
+    getAll(); //Call immediately
+
+    async function getImage(url){
+        let response = await fetch(url); //USE URL 
+        const data = await response.json(); //convert from json string to javascript data types  
+        const image = document.createElement("img");
+        image.alt = data.name;
+        image.src = data.sprites.front_default; //use proprty of property of json object received
+        document.body.appendChild(image)
+    }
+</script>
