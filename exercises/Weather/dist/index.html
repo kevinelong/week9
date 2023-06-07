@@ -1,0 +1,53 @@
+<body>
+<div id="target"></div>
+</body>
+<script>
+    function getSelectFromList(list, display="name", value="name"){
+        const select = document.createElement("select");
+        list.forEach(item=>{
+            const option = document.createElement("option");
+            option.innerHTML = item[display];
+            option.value = item[value];
+            select.appendChild(option);
+        })
+        return select;
+    }
+    //Weatherhttps://api.weather.gov/
+
+    let cities = [
+        {
+            name: "Benbrook, TX",
+            latitude: 32.6732,
+            longitude: -97.4606
+        },        
+        {
+            name: "Columbia City, OR",
+            latitude: 45.890114,
+            longitude: -122.807048
+        },
+        // ...45.890114 and the longitude is: -122.807048
+    ];
+    const list = cities.map(c=>{
+        return {name: c.name, lat_long :`${c.latitude},${c.longitude}`}
+    });
+    const select = getSelectFromList(list, "name", "lat_long");
+    
+    document.body.appendChild(select);
+    
+    async function getWeather(lat_long){
+        const results = await fetch("https://api.weather.gov/points/" + lat_long);
+        const data = await results.json();
+        console.log(data);
+        const weather = await fetch(data.properties.forecast);
+        const weather_data = await weather.json();
+        console.log(weather_data);
+        const target = document.getElementById("target");
+        target.innerHTML = weather_data.properties.periods[0].detailedForecast;
+    }
+    
+    select.addEventListener("change", ()=>{
+        const value = select.selectedOptions[0].value;
+        console.log(value);
+        getWeather(value);
+    });
+</script>
