@@ -38,9 +38,11 @@
         const results = await fetch("https://api.weather.gov/points/" + lat_long);
         const data = await results.json();
         console.log(data);
+
         const weather = await fetch(data.properties.forecast);
         const weather_data = await weather.json();
         console.log(weather_data);
+        
         const target = document.getElementById("target");
         target.innerHTML = weather_data.properties.periods[0].detailedForecast;
     }
